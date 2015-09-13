@@ -109,8 +109,6 @@ reduceByAll i b = let neighbors = L.concat (filter (elem i) allGroups)
                       filter (\x -> not $ S.member x neighborNums) [1 .. 9]
 
 
-
-
 --string functions:
 
 instance Show Square where
@@ -130,5 +128,6 @@ toSquare c
       | C.isDigit c = Sq $ C.digitToInt c
       | otherwise = Em
 
-toBoard :: String -> Board
-toBoard = (map toSquare) . (replace '\n' "") . (replace ' ' "")
+toBoard :: String -> Maybe Board
+toBoard s = let board = ((map toSquare) . (replace '\n' "") . (replace ' ' "")) s in
+              if (length board) == (width * height) then Just board else Nothing
